@@ -1,0 +1,33 @@
+
+.signInButton {
+ height: 3rem;
+ border-radius: 3rem; // arredondar os cantos
+ background: var(--gray-850);
+ border: 0;
+ padding: 1.5rem;
+ color: var(--white);
+
+ display: flex; //alinhar o icone com o texto do botão
+ align-items: center; //centralizar eles no meio do botão
+ justify-content: center;
+ font-weight: bold;
+
+ svg{ //icone
+  width: 20px;
+  height: 20px;
+  color: var(--yellow-500);
+ }
+
+ svg:first-child {
+  margin-right: 1rem;
+ }
+
+ svg.closeIcon { // style do icone de X de fechar o botão
+  margin-left: 1rem;
+ }
+
+ transition: 0.2s;
+ &:hover {
+  filter: brightness(0.8);
+ }
+}

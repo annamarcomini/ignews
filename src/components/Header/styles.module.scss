@@ -1,0 +1,57 @@
+.headerContainer { // header
+height: 5rem;
+border-bottom: 1px solid var(--gray-800); // margem que fica embaixo uma pequena listrinha
+
+}
+
+.headerContent{ //conteudo dentro do header essa é a div
+max-width: 1120px;
+height: 5rem;
+margin-left: 10.37rem;
+padding: 0 2rem;
+display: flex; //para colocar um do lado do outro
+align-items: center; // alinhar eles ao centro do quadrado
+
+button { margin-left: auto};
+
+
+nav {
+ margin-left: 5rem; // espaço do home e do post do logo do site, são as pages de navegação
+ height: 5rem;
+}
+
+a {
+ display: inline-block;
+ position: relative;
+ padding: 0 0.5rem;
+ height: 5rem; //se colocar a linha do mesmo tamanho a linha do q ela ocupa(height) o texto fica ao centro
+ line-height: 5rem;
+ color: var(--gray-300);
+
+ & + a {
+  margin-left: 2rem; //um espaçamento entre os links
+ }
+ 
+ transition: color 02s;
+ &:hover {
+color: var(--white);
+ }
+
+ &.active {
+  color: var(--white);
+  font-weight: bold; // colocar negrito no texto dos links q esta ativo no momento
+ }
+ &.active::after { // after vai colocar algo antes de fechar a tag, aqui é ae stilização da barrinha amarela que fica mostrando em qual page vc está no momento
+  content:'';
+  height: 3px;
+  border-radius: 3px 3px 0px 0px; //esquerda e direita de cima 
+  width: 100%;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  background: var(--yellow-500);
+  
+ }
+}
+
+}
