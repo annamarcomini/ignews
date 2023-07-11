@@ -39,6 +39,7 @@ export default function Home({product}: HomeProps) {
   )
   }
 
+
 export const getStaticProps: GetStaticProps = async () => { // server side ficaria recarregando a pagina sempre tempo real e o client side demanda menos tempo ainda de performance
  const price  = await stripe.prices.retrieve('price_1NGtlTCsKvsWBmPsYnGiiK4C', {
   expand: ['product'] //expandindo para acessar todas as informações do produto

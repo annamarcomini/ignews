@@ -1,7 +1,9 @@
 import { SignInButton } from '../SignInButton';
 import styles from './styles.module.scss';
+import { ActiveLink } from '../ActiveLink';
 
 export function Header() {
+ 
  return (
    //terá o header o quadro que pega a tela toda e a div que sera o quadro conteudo do header
    <header className={styles.headerContainer}>
@@ -9,11 +11,16 @@ export function Header() {
      <div className={styles.headerContent}>
        <img src="/logo.svg" alt="ignews"></img>
        <nav>
-         <a className={styles.active} href="">
-           Home
-         </a>{" "}
+         <ActiveLink activeClassName={styles.active} href="/" legacyBehavior>
+           <a>Home</a>
+         </ActiveLink>
          {/* active é pra fazer o botao amarelo mostrando a ativação das pages*/}
-         <a href="">Posts</a>
+
+         <ActiveLink
+           activeClassName={styles.active} href="/posts" legacyBehavior>
+           {/*link foi para otimizar o  carregando */}
+           <a>Posts</a>
+         </ActiveLink>
        </nav>
        <SignInButton /> {/*componente do botao no Header */}
      </div>
