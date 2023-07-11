@@ -4,9 +4,11 @@ import { getStripeJs } from '../../services/stripe-js';
 import styles from './styles.module.scss';
 
 interface SubscribeButtonProps {
- priceId: string;
+  priceId: string
 }
-export function SubscribeButton({ priceId }: SubscribeButtonProps) {
+ 
+export function SubscribeButton({priceId}: SubscribeButtonProps) {
+ 
  const session = useSession(); 
 
  async function handleSubscribe() {
@@ -16,10 +18,11 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
   }
 
   try {
-   const response= await api.post('/subscribe') //redireciona o usuario ao clicar no button subscribe para o pagamento stripe
+   const response= await api.post('/subscribe') 
    const {sessionId} =response.data
+   console.log("alo",response)
    const stripe= await getStripeJs()
-   await stripe.redirectToCheckout({sessionId: sessionId})
+   await stripe.redirectToCheckout({sessionId: sessionId.id})
   } 
   catch(err) {
    alert(err.message);

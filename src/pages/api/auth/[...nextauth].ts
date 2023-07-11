@@ -1,8 +1,8 @@
-
-import {query as q} from 'faunadb'
+import { query as q } from "faunadb"
 import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github"
-import {fauna} from '../../../services/fauna';
+import { fauna } from "../../../services/fauna"
+
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -10,24 +10,43 @@ export const authOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
-    ],
   
-   callbacks: { // função do nextauth
-    async signIn({ user, account, profile}) {
-     const {email} = user
-     
-     await fauna.query( //metodo de fazer inserção no banco de dados fauna
-      q.Create(
-       q.Collection('user'), // a coleção 
-       {data: {email}} //data é  onde fica o email do usario
-       
-      )
-     )
-     
-      return true
+    }),
+  ],
+
+  callbacks: {
+    // função do nextauth
+    async signIn({ user, account, profile }) {
+      const { email } = user
+
+      try {
+        await fauna.query(
+          //metodo de fazer inserção no banco de dados fauna e verificar se tem o usuario
+          q.If(
+            q.Not(
+              //se o user não existir
+              q.Exists(
+                q.Match(q.Index("user_by_email"), q.Casefold(user.email))
+              )
+            ),
+            q.Create(
+              //eu crio ele
+              q.Collection("user"),
+              { data: { email } }
+            ),
+            q.Get(
+              //se existe eu só pego os dados
+              q.Match(q.Index("user_by_email"), q.Casefold(user.email))
+            )
+          )
+        )
+
+        return true
+      } catch {
+        return false
+      }
     },
-   },
-  }
+  },
+}
 
 export default NextAuth(authOptions)
