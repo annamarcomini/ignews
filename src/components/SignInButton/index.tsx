@@ -1,11 +1,12 @@
 import { FaGithub } from "react-icons/fa" //biblioteca react-icons
 import { FiX } from "react-icons/fi" // icon de x de fechar o button
-import { signIn, signOut, useSession, UseSessionOptions } from "next-auth/react"
+import { signIn, signOut, useSession, } from "next-auth/client"
 import styles from "./styles.module.scss"
 
 
+
 export function SignInButton() {
-  const session: any = useSession()
+  const session:any = useSession()
   //console.log(session.data)
   const isAuthenticated = session.status === "authenticated"
   // estado do botao
@@ -15,7 +16,7 @@ export function SignInButton() {
      onClick={()=> signOut()}
      >
       <FaGithub color="#04d361" /> {/*para colocar o icon do github no botão */}
-      {session.data.session.user.name}
+      {session.data.user?.name}
       
       {/*nome de usuário de acordo com retorno do git da pessoa */}
       <FiX color="#737380" className={styles.closeIcon} />

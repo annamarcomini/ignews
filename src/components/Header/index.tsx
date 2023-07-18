@@ -11,13 +11,13 @@ export function Header() {
      <div className={styles.headerContent}>
        <img src="/logo.svg" alt="ignews"></img>
        <nav>
-         <ActiveLink activeClassName={styles.active} href="/" legacyBehavior>
+         <ActiveLink activeClassName={styles.active} href="/" >
            <a>Home</a>
          </ActiveLink>
          {/* active é pra fazer o botao amarelo mostrando a ativação das pages*/}
 
          <ActiveLink
-           activeClassName={styles.active} href="/posts" legacyBehavior>
+           activeClassName={styles.active} href="/posts">
            {/*link foi para otimizar o  carregando */}
            <a>Posts</a>
          </ActiveLink>

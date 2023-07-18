@@ -1,9 +1,11 @@
 import { GetServerSideProps } from "next" // esse slug é para  acessar o post da pagina posts
-import { getSession } from "next-auth/react"
+import { getSession } from "next-auth/client"
 import Head from "next/head"
 import { RichText } from "prismic-dom"
 import { getPrismicClient } from "../../services/prismic"
 import styles from './post.module.scss'
+
+
 
 interface PostProps {
  post: {
@@ -37,7 +39,7 @@ export const getServerSideProps:GetServerSideProps = async ({req, params})=> {
 const session: any = await getSession({req})
 const {slug}= params
 
-
+console.log(session)
 if (!session.activeSubscription) {
   return {
     redirect: {

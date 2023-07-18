@@ -1,22 +1,22 @@
-import { query as q } from "faunadb"
+import { Casefold, query as q } from "faunadb"
 import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import Providers from "next-auth/providers"
 import { fauna } from "../../../services/fauna"
 
-
-export const authOptions = {
-  // Configure one or more authentication providers
+  
+ export default NextAuth({
   providers: [
-    GithubProvider({
+    Providers.GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  
-    })
+      scope: 'read:user',
+    }),
   ],
 
   callbacks: {
     // função do nextauth
     async session(session){
+  
     try{
       const userActiveSubscription = await fauna.query(
       q.Get(
@@ -28,7 +28,7 @@ export const authOptions = {
          q.Get(
           q.Match( 
            q.Index('user_by_email'),
-           q.Casefold(session.session.user.email)
+           Casefold(session.user.email)
           )
          )
         )
@@ -46,9 +46,7 @@ export const authOptions = {
        activeSubscription: userActiveSubscription
      }
     } catch {
-     return {...session,
-     activeSubscription: null
-    }
+     return session
     }
     },
     async signIn({ user, account, profile }) {
@@ -83,5 +81,4 @@ export const authOptions = {
     },
   },
 }
-
-export default NextAuth(authOptions)
+ )
